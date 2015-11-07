@@ -1,2 +1,3 @@
-# mongodb-university
-Repository for MongoDB University homework
+# MongoDB University
+
+This repository contains coursework for [MongoDB University](https://university.mongodb.com/) courses.
