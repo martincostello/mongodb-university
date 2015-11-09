@@ -3,9 +3,9 @@ $Destination = Join-Path $PSScriptRoot ".\dump"
 
 if ((Test-Path $Destination) -eq $false)
 {
-	Write-Host "Extracting '$BackupPath' to '$Destination'..."
-	Add-Type -Assembly "System.IO.Compression.FileSystem"
-	[IO.Compression.ZipFile]::ExtractToDirectory($BackupPath, $Destination)
+    Write-Host "Extracting '$BackupPath' to '$Destination'..."
+    Add-Type -Assembly "System.IO.Compression.FileSystem"
+    [IO.Compression.ZipFile]::ExtractToDirectory($BackupPath, $Destination)
 }
 
 $cmd = 'db.dropDatabase()'
