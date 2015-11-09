@@ -12,3 +12,9 @@ $cmd = 'db.dropDatabase()'
 
 $cmd | mongo blog
 mongorestore (Join-Path $Destination "dump")
+
+$cmd = 'use blog
+db.posts.createIndex({ "CreatedAtUtc": -1 })
+db.posts.createIndex({ "Tags": 1, "CreatedAtUtc": -1 })'
+
+$cmd | mongo
