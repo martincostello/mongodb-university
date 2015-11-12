@@ -23,8 +23,14 @@ $cmd = 'db.zips54.aggregate([
     },
     {
         $group: {
-            "_id": 0,
+            "_id": null,
             "people": { "$sum": "$pop" }
+        }
+    },
+    {
+        $project: {
+            "_id": 0,
+            "people": "$people"
         }
     }
 ]);'
