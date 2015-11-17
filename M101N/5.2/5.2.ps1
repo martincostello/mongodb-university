@@ -12,26 +12,20 @@ $cmd = '
 db.smallZips.aggregate([
     {
         $match: {
-            "$or": [
-                {"state": "CA"},
-                {"state": "NY"}
-            ],
-            "pop": { "$gt": 25000 }
-        }
-    },
-    {
-        $project: {
-            "_id": 0,
-            "state": "$state",
-            "city": "$city",
-            "zip": "$_id",
-            "pop": "$pop"
+            "state" : {
+                "$in": [ "CA", "NY" ]
+            }
         }
     },
     {
         $group: {
             "_id": { "state": "$state", "city": "$city" },
             "pop": { $sum: "$pop" }
+        }
+    },
+    {
+        $match: {
+            "pop" : { $gt: 25000 }
         }
     },
     {
