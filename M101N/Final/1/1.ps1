@@ -20,6 +20,9 @@ $cmd | mongo enron
 mongorestore (Join-Path $Destination "dump")
 
 $cmd = 'use enron
-db.messages.count();'
+db.messages.count({
+        "headers.From": "andrew.fastow@enron.com",
+        "headers.To": "jeff.skilling@enron.com"
+    });'
 
 $cmd | mongo
