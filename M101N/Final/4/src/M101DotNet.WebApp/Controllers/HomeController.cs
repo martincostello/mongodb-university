@@ -9,6 +9,7 @@ using M101DotNet.WebApp.Models;
 using M101DotNet.WebApp.Models.Home;
 using MongoDB.Bson;
 using System.Linq.Expressions;
+using System.Globalization;
 
 namespace M101DotNet.WebApp.Controllers
 {
@@ -153,6 +154,10 @@ namespace M101DotNet.WebApp.Controllers
             // might throw an exception depending on how you solve this problem. 
             // This is documented here along with a workaround:
             // https://jira.mongodb.org/browse/CSHARP-1246
+
+            await blogContext.Posts.UpdateOneAsync(
+                (p) => p.Id == model.PostId,
+                Builders<Post>.Update.Inc(string.Format(CultureInfo.InvariantCulture, "Comments.{0}.Likes", model.Index), 1));
 
             return RedirectToAction("Post", new { id = model.PostId });
         }
