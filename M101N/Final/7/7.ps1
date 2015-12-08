@@ -20,7 +20,31 @@ $cmd | mongo
 Get-Content -Path '.\final7\final7\albums.json' | mongoimport -d photos -c albums
 Get-Content -Path '.\final7\final7\images.json' | mongoimport -d photos -c images
 
-$cmd = 'db.albums.createIndex({"images":1});
-db.images.createIndex({"tags":1});'
+$cmd = 'db.albums.createIndex({ "images": 1 });
+db.images.createIndex({ "tags": 1 });
+db.albums.aggregate([
+    {
+        $unwind: "$images"
+    },
+    {
+        $group: {
+            "_id": "$images"
+        }
+    },
+    {
+        $group: {
+            _id: null,
+            count: {
+                $sum: 1
+            }
+        }
+    }
+]);'
+
+$cmd | mongo photos
+
+# Delete the orphans...
+
+$cmd = 'db.images.find({ "tags": "sunrises" }).count()'
 
 $cmd | mongo photos
